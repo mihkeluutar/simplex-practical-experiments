@@ -96,8 +96,8 @@ def simplex(A, b, c, print_steps=False):
     # 2. Find pivot row by calculating quotients
     # 3. Performs "pivoting" by setting other values in the column as 0
     while min(s_tableau[-1][:-2]) < 0:  # Excluding Z and c from the check
-        pivot_col_index = find_pivot_column(s_tableau, plot_for_gif)
-        pivot_row_index = calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index=pivot_col_index, plot_for_gif=plot_for_gif)
+        pivot_col_index = find_pivot_column(s_tableau)
+        pivot_row_index = calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index=pivot_col_index)
         perform_pivoting(s_tableau, pivot_row_index=pivot_row_index, pivot_col_index=pivot_col_index)
 
         # Prints out the simplex tableau
