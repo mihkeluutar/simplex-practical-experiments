@@ -9,7 +9,7 @@ This file has the Python implementation of a basic Simplex Method.
 """
 
 from Utilities.format_utils import *     # Formatting values for prettier printing
-from Utilities.visualization_utils import *
+from IGNORED.visualization_utils import *
 
 # ---
 # Implementation of the Simplex Algorithm
@@ -26,15 +26,12 @@ from Utilities.visualization_utils import *
 #
 # The logic of the algorithm is divided into sections with clear marking and commenting to make it simple to understand
 #
-# This implementation also makes calls to the function plot_simplex_tableau which are used for creating a GIF that illustrates the working of
-# the algorithm. This can be set by the parameter plot_for_gif
-#
 # More about the Simplex Method can be read from the accompanying thesis or
 # from wikipedia: https://en.wikipedia.org/wiki/Simplex_algorithm 
 # Additional help from:
 # 1) https://explain-that.blogspot.com/2011/06/logic-of-how-simplex-method-works.html
 # 2) https://math.libretexts.org/Bookshelves/Applied_Mathematics/Applied_Finite_Mathematics_(Sekhon_and_Bloom)/04%3A_Linear_Programming_The_Simplex_Method/4.02%3A_Maximization_By_The_Simplex_Method
-def simplex(A, b, c, print_steps=False, plot_for_gif=False):
+def simplex(A, b, c, print_steps=False):
     # **********
     # START OF SETUP
     # **********
@@ -112,9 +109,6 @@ def simplex(A, b, c, print_steps=False, plot_for_gif=False):
     # END OF CONVERGENCE
     # **********          
 
-    if plot_for_gif:
-        plot_simplex_tableau(s_tableau, pivot_col_index=len(s_tableau[0])-1, pivot_row_index=len(s_tableau)-1)
-
     # Prints out the formatted simplex tableau as the solution. The optimum value is in the bottom right corner.
     print(f'Solution found!')
     print(format_simplex_tableau(s_tableau))
@@ -124,13 +118,9 @@ def simplex(A, b, c, print_steps=False, plot_for_gif=False):
 # Identifies the column we should use for pivoting by finding the minimum
 # value in the bottow row of the simplex tableau (s_tableau)
 # returns an integer (pivot_col_index) that we'll use in the other methods
-def find_pivot_column(s_tableau, plot_for_gif=False):
+def find_pivot_column(s_tableau):
     bottom_row = s_tableau[-1][:-2]  # Exclude Z and c columns
     pivot_col_index = bottom_row.index(min(bottom_row))
-
-    # Plotting simplex tableau for GIF
-    if plot_for_gif:
-        plot_simplex_tableau(s_tableau, pivot_col_index=pivot_col_index)
 
     return pivot_col_index
 
@@ -139,7 +129,7 @@ def find_pivot_column(s_tableau, plot_for_gif=False):
 # A quotient is calculated by taking the right-most column (c - constraint values) and
 # dividing it by the value the column specified by pivot_col_index
 # The method returns an index for the row with smallest quotient.
-def calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index, plot_for_gif=False):
+def calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index):
     quotients = []  # Saved as a list
     # Iterates over the column and calculates quotients for all elements
     for i, row in enumerate(s_tableau[:-1]):  # Exclude the objective function row
@@ -150,10 +140,6 @@ def calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index, plot_for_
         else:
             quotients.append((float('inf'), i))  # If quotient can't be calculated we should use inf instead
 
-        # Plotting s_tableau for GIF
-        if plot_for_gif:    
-            plot_simplex_tableau(s_tableau, pivot_row_index=i, pivot_col_index=pivot_col_index)    
-
     _, pivot_row_index = min(quotients)  # Finds the index of the row with the samllest quotient.
     
     # Returns the row index
@@ -163,21 +149,15 @@ def calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index, plot_for_
 # The function is used to perform "pivoting" of the simplex tableau, which is given as an input parameter s_tableau
 # Additional input parameters pivot_row_index and pivot_col_index are also used for creating a GIF if plot_for_gif is
 # marked as True.
-def perform_pivoting(s_tableau, pivot_row_index, pivot_col_index, plot_for_gif=False):
+def perform_pivoting(s_tableau, pivot_row_index, pivot_col_index):
 
     # Locating the pivot element
     pivot_element = s_tableau[pivot_row_index][pivot_col_index]
-
-    # Plotting for GIF
-    if plot_for_gif:
-        plot_simplex_tableau(s_tableau, pivot_col_index=pivot_col_index, pivot_row_index=pivot_row_index)
 
     # Make pivot element 1
     # TODO: COMMENTS
     for j in range(len(s_tableau[0])):
         s_tableau[pivot_row_index][j] /= pivot_element
-        if plot_for_gif:
-            plot_simplex_tableau(s_tableau, pivot_col_index=j, pivot_row_index=pivot_row_index)
 
     # Make other entries in pivot column 0
     # TODO: COMMENTS
@@ -186,13 +166,6 @@ def perform_pivoting(s_tableau, pivot_row_index, pivot_col_index, plot_for_gif=F
             factor = row[pivot_col_index]
             for j in range(len(row)):
                 row[j] -= factor * s_tableau[pivot_row_index][j]
-                if plot_for_gif:
-                    plot_simplex_tableau(s_tableau, pivot_col_index=i, pivot_row_index=j)
-        
-        # Plotting s_tableau for GIF
-        if plot_for_gif:
-            plot_simplex_tableau(s_tableau, pivot_col_index=pivot_col_index, pivot_row_index=pivot_row_index)
-
 
 # Constructs the simplex tableau from inputs
 # TODO: COMMENTS!
