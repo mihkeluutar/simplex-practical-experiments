@@ -147,28 +147,24 @@ def calculate_quotients_and_find_pivot_row(s_tableau, pivot_col_index):
 
 
 # The function is used to perform "pivoting" of the simplex tableau, which is given as an input parameter s_tableau
-# Additional input parameters pivot_row_index and pivot_col_index are also used for creating a GIF if plot_for_gif is
-# marked as True.
 def perform_pivoting(s_tableau, pivot_row_index, pivot_col_index):
 
     # Locating the pivot element
     pivot_element = s_tableau[pivot_row_index][pivot_col_index]
 
     # Make pivot element 1
-    # TODO: COMMENTS
     for j in range(len(s_tableau[0])):
         s_tableau[pivot_row_index][j] /= pivot_element
 
-    # Make other entries in pivot column 0
-    # TODO: COMMENTS
+    # Make other entries in pivot column 0 (iterates over the column)
     for i, row in enumerate(s_tableau):
         if i != pivot_row_index:
             factor = row[pivot_col_index]
             for j in range(len(row)):
                 row[j] -= factor * s_tableau[pivot_row_index][j]
 
-# Constructs the simplex tableau from inputs
-# TODO: COMMENTS!
+# Constructs the simplex tableau from inputs A, b and c
+# by adding slack variables to the constraints to create equations.
 def construct_simplex_tableau(A, b, c):
     num_of_variables = len(A)
     num_of_slack_variables = len(b)
@@ -178,10 +174,10 @@ def construct_simplex_tableau(A, b, c):
     # Initialize tableau with zeros
     s_tableau = [[0 for _ in range(num_of_columns)] for _ in range(num_of_rows)]
 
-    # Fill in the slack variables and the constants
+    # Fill in the slack variables and the inequality bounds
     for i in range(num_of_slack_variables):
         s_tableau[i][num_of_variables + i] = 1  # Set slack variable coefficient
-        s_tableau[i][-1] = c[i]  # Set the constant
+        s_tableau[i][-1] = c[i]  # Set the bounds
 
     # Fill in the objective function
     for i, coef in enumerate(A):
@@ -193,5 +189,6 @@ def construct_simplex_tableau(A, b, c):
         for j, coef in enumerate(constraint[:-num_of_slack_variables]):  # Exclude slack variables
             s_tableau[i][j] = coef
 
+    # Returns the Simplex Tableau as a matrix
     return s_tableau
 

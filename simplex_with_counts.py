@@ -5,11 +5,11 @@ Last updated: 01.05.2024
 University of Tartu
 Beyond Worst Case Complexity of the Simplex Algorithm
 
-TODO: What's this file for?
+This file is a copy of simplex.py, but with added variable to count the
+number of operations required to arrive at a solution.
 """
 
 
-# TODO: COMMENTS
 # If matrix == dense, then no optimization is done
 # If matrix == sparse optimization is done
 def simplex_w_counts(A, b, c, func='max', matrix='dense'):
@@ -145,7 +145,7 @@ def perform_pivoting_w_counts(s_tableau, pivot_row_index, pivot_col_index, count
     return s_tableau, counts
 
 
-# TODO: Proper comments
+# Detailed implementation with comments is in simplex.py
 def perform_sparse_pivoting_w_counts(s_tableau, pivot_row_index, pivot_col_index, counts):
     pivot_element = s_tableau[pivot_row_index][pivot_col_index]
     counts['accesses'] += 2        # Accessing both column and row
