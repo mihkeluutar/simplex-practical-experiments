@@ -2,6 +2,10 @@
 
 This codebase supplements my thesis by the same name. It has the necessary functions for running three practical experiments on the performance of the Simplex Method based on input distributions.
 
+## Running the Code
+
+The experiments were tested to work with ```Python 3.10.13``` and have not been verified to run on other versions. However they should still run as the necessary packages are quite basic (Matplotlib, Numpy).
+
 ## Structure of the Codebase
 
 ### Cool Bits
