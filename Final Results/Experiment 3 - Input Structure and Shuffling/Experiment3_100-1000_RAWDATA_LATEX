@@ -2,7 +2,7 @@
 \begin{table}[!ht]
 \tiny % Use super small font
 \centering
-\begin{tabular}{@{}ccccc@}{}} \\ 
+\begin{tabular}{@{}ccccc@}{} \\ 
 \toprule 
 Ineq. No. & base & cols & rows & doub \\ 
 \midrule 
@@ -24,6 +24,7 @@ Ineq. No. & base & cols & rows & doub \\
 850 & 89829217 & 99647532 & 98487750 & 124152716 \\ 
 900 & 113429540 & 106757080 & 154850401 & 110742994 \\ 
 950 & 170769721 & 146056492 & 126749611 & 142870869 \\ 
+1000 & 153792091 & 143524583 & 134113421 & 173898153 \\ 
 
 \bottomrule    
 \end{tabular}

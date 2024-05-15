@@ -88,10 +88,10 @@ def simplex(A, b, c, print_steps=False):
 
 
     # **********
-    # START OF CONVERGENCE
+    # START OF PIVOTING
     # **********    
 
-    # Convergence consists of three steps, which are implemented as separate functions
+    # Pivoting consists of three steps, which are implemented as separate functions
     # 1. Find pivot column by iterating over the bottom row of s_tableau and finding the index of the element with most negative value
     # 2. Find pivot row by calculating quotients
     # 3. Performs "pivoting" by setting other values in the column as 0
@@ -106,7 +106,7 @@ def simplex(A, b, c, print_steps=False):
             format_simplex_tableau(s_tableau)
 
     # **********
-    # END OF CONVERGENCE
+    # END OF PIVOTING
     # **********          
 
     # Prints out the formatted simplex tableau as the solution. The optimum value is in the bottom right corner.
